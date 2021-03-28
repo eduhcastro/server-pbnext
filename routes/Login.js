@@ -2,10 +2,10 @@ module.exports = function(app,Master,pool){
 app.post('/login', async (req, res) => {
     var Token = req.body.authorization
     var CheckToken = Master.State(Token)
-    console.log(CheckToken)
     console.log({
-       token: Token,
-       Check: CheckToken
+       Action: "Login",
+       Token: Token,
+       Check: CheckToken != 1 ? "Authorized": "Not authorized"
     })
     if (CheckToken == 1) {
        res.status(403)

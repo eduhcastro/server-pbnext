@@ -1,15 +1,17 @@
 module.exports = function(app,Gift,pool){
 app.post('/gift', async (req, res) => {
     var TokenComplet = req.body.token
-  // console.log({
-  //    Token: req.body.token,
-  //    Zero: req.body.token.split("3V0L1=")[0],
-  //    Um: req.body.token.split("3V0L1=")[1],
-  //    Dois: req.body.token.split("3V0L1=")[2]
-  // })
     const Giftt = new Gift(TokenComplet,pool);
-    console.log(Giftt.Verifiy())
-    if(Giftt.Verifiy() == false){ // VERIFICAÇÃO DO TOKEN
+    const Verifiy = Giftt.Verifiy()
+   console.log({
+      Action: "Code",
+      Token: req.body.token,
+      Check: Verifiy == false ? "Not Authorized": "Authorized"
+      //Zero: req.body.token.split("3V0L1=")[0],
+      //Um: req.body.token.split("3V0L1=")[1],
+      //Dois: req.body.token.split("3V0L1=")[2]
+   })
+    if(Verifiy == false){ // VERIFICAÇÃO DO TOKEN
        res.status(403)
        res.json({
           objects: {},
@@ -29,7 +31,7 @@ app.post('/gift', async (req, res) => {
         res.status(200)
         res.json({
            objects: {
-              value: UsageGift.pinvalue,
+              value: UsageGift.valueresult,
               method: UsageGift.method,
               data: UsageGift.date,
               key: UsageGift.key,

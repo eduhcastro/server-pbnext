@@ -24,9 +24,9 @@ module.exports = class Remote {
         try {
           await client.query('BEGIN')
           try {
-            var ress = await client.query("SELECT login,player_id,rank,exp,player_name,login,fights,fights_win,fights_lost,kills_count,deaths_count,headshots_count FROM accounts WHERE login = '"+user+"';")
+            var ress = await client.query("SELECT login FROM accounts WHERE login = '"+user+"';")
             if(ress.rowCount == 1)
-                res = ress.rows;
+                res = 0;
             else
             res = 99;
             await client.query('COMMIT')
@@ -101,10 +101,32 @@ module.exports = class Remote {
         try {
           await client.query('BEGIN')
           try {
-            var ress = await client.query("SELECT login,player_id,rank,exp,player_name,login,fights,fights_win,fights_lost,kills_count,deaths_count,headshots_count FROM accounts WHERE login = '"+U+"';")
+            var ress = await client.query("SELECT login,player_id,rank,exp,player_name,login,fights,fights_win,fights_lost,kills_count,deaths_count,headshots_count,money,gp FROM accounts WHERE login = '"+U+"';")
             if(ress.rowCount == 1)
                 res = ress.rows;
             else
+            res = 99;
+            await client.query('COMMIT')
+          } catch (err) {
+            await client.query('ROLLBACK')
+            throw err
+          }
+        } finally {
+          client.release()
+        }
+        return res
+      }
+
+      async Register(U,P,E,pool){
+        const Toolss = require("./Tools");
+        const Tools = new Toolss();
+        const Token = Tools.GenerateToken();
+        const client = await pool.connect()
+        let res
+        try {
+          await client.query('BEGIN')
+          try {
+            var ress = await client.query("INSERT INTO accounts (login,password,email,token) VALUES ('"+U+"','"+P+"','"+E+"','"+Token+"');")
             res = 99;
             await client.query('COMMIT')
           } catch (err) {
