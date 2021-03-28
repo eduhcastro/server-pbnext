@@ -7,11 +7,8 @@ app.post('/gift', async (req, res) => {
       Action: "Code",
       Token: req.body.token,
       Check: Verifiy == false ? "Not Authorized": "Authorized"
-      //Zero: req.body.token.split("3V0L1=")[0],
-      //Um: req.body.token.split("3V0L1=")[1],
-      //Dois: req.body.token.split("3V0L1=")[2]
    })
-    if(Verifiy == false){ // VERIFICAÇÃO DO TOKEN
+    if(Verifiy == false){
        res.status(403)
        res.json({
           objects: {},
