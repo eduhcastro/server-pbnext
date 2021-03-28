@@ -27,7 +27,8 @@ See the server / client working
 
 
 
-
-## Contributing
+## Contributing & Contact
 
 This whole system was developed by me, any contribution is welcome.
+
+Discord: CastroMS#8830
