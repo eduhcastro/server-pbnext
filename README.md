@@ -1,4 +1,4 @@
-# [Server PBNEXT](https://reactjs.org/) &middot;
+# [Server PBNEXT](https://www.facebook.com/) &middot;
 
 This project is specific to my other project on the NEXTJS platform.
 
@@ -10,8 +10,8 @@ Use this as a way to learn, innovate, any contribution is welcome.
 
 Well, for this to work you must have the Server DATABASE 3.24++ and these tables:**:
 
-* Use this [Script](https://reactjs.org/docs/add-react-to-a-website.html) to create the tables.
-* You should also have to configure the [Keys](https://reactjs.org/docs/add-react-to-a-website.html) according to the Client .
+* Use this [Script](https://github.com/skillerm/server-pbnext/blob/main/more/script.sql) to create the tables.
+* You should also have to configure the [Keys](https://github.com/skillerm/server-pbnext/blob/main/.env) according to the Client .
 * Use the npm i command to install the dependencies.
 * Start the server from server.js.
 
