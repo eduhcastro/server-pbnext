@@ -152,14 +152,6 @@ module.exports = class Gift {
       var ui = await Tools.userSeach(u,this.pool) // User id owner
       const client = await this.pool.connect()
       let status
-      //console.log({
-      //  uis: ui,
-      //  pi: ui[0].player_id,
-      //  ii: i,
-      //  dd: n,
-      //  ee: c,
-      //  xx: y
-      //})
       const v = await this.VerifyItemEx(ui[0].player_id,i) // Verification of the item with user and item id
       if(await this.VerifiyCouponUser(cp,u) == 0){
       await this.InsertCouponUsage(u,cp,k) // Insert Usage
@@ -198,11 +190,11 @@ module.exports = class Gift {
           try {
             await client.query('BEGIN')
             try {
-               await client.query("UPDATE player_items SET count = '"+newcount+"' WHERE object_id = '"+oi+"';") ///// TERMINAR
-                status = 0 // Code OK
+               await client.query("UPDATE player_items SET count = '"+newcount+"' WHERE object_id = '"+oi+"';")
+                status = 0
               await client.query('COMMIT')
             } catch (err) {
-              status = 1; // Code Error
+              status = 1;
               await client.query('ROLLBACK')
               throw err
             }
@@ -228,11 +220,11 @@ module.exports = class Gift {
             try {
               await client.query('BEGIN')
               try {
-                 await client.query("UPDATE player_items SET count = '"+dttb+"' WHERE object_id = '"+oi+"';") ///// TERMINAR
-                  status = 0 // Code OK
+                 await client.query("UPDATE player_items SET count = '"+dttb+"' WHERE object_id = '"+oi+"';")
+                  status = 0
                 await client.query('COMMIT')
               } catch (err) {
-                status = 1; // Code Error
+                status = 1;
                 await client.query('ROLLBACK')
                 throw err
               }
@@ -288,13 +280,7 @@ module.exports = class Gift {
               if(ress.rowCount >= 1){
                 var itemsnames = ress.rows[0].items
                   const splits = itemsnames != null ? itemsnames.split("null"): ''
-                  var newitem = `${name},${splits}` // INDEFINIDO
-                 // console.log({
-                 //   RESROWS: ress.rows[0].items,
-                 //   NEW : newitem,
-                 //   NAME : name
-                 //   
-                 // })
+                  var newitem = `${name},${splits}` 
                   await client.query("UPDATE website_coupon_usage SET items = '"+newitem+"' WHERE login = '"+u+"' AND coupon = '"+c+"';")
                   res = 1
               }else{
@@ -331,7 +317,6 @@ module.exports = class Gift {
                     await this.UpdateItems(User,rowsGift.dt[i],rowsGift.dt[0].cupon)
                     if(i == rowsGift.drc-1){
                       const mi = await this.VerifiyCouponUser(rowsGift.dt[0].cupon,User)
-                      // await this.InsertCouponUsage(User,rowsGift.dt[i].cupon,rowsGift.dt[i].citem_name) // Insert Usage
                       if(rowsGift.dt[i].permanent == false){
                       if(this.DC(rowsGift.dt[i].cupon) == 1){
                         Usage = {status: 104}
@@ -354,10 +339,6 @@ module.exports = class Gift {
                       }
                     }
                   }
-                 //console.log({
-                 //  rows: rowsGift.dt,
-                 //  UsageItem: Inserir
-                 //})
                 }else{
                 var Pin = rowsGift.pin
                 var Value = rowsGift.value
@@ -370,13 +351,13 @@ module.exports = class Gift {
                     if(ress.rowCount == 1){
                         await client.query("INSERT INTO website_pin_history (key,pin,value,data,owner) VALUES ('"+Key+"','"+Pin+"','"+Value+"','10/10/2030','"+User+"');")
                         await client.query("DELETE FROM website_pin WHERE pin = '"+Pin+"';")
-                        updatemoney = 0 // SUCESSO
+                        updatemoney = 0
                     }else{
-                        updatemoney = 101 // FALHOU SOMAR
+                        updatemoney = 101
                     }
                     await client.query('COMMIT')
                   } catch (err) {
-                    updatemoney = 97; // FALHOU TRY
+                    updatemoney = 97;
                     await client.query('ROLLBACK')
                     throw err
                   }
@@ -386,7 +367,7 @@ module.exports = class Gift {
                 Usage = {status: updatemoney, valueresult: Value, method: Method, setup: Setup, key: Key, date: "27/03/2021"} // SUCESSO 99 
             }
             }else{
-                Usage = {status: 103} // CODIGO INCORRETO
+                Usage = {status: 103}
             } 
         }catch (e){
             console.log(e)
