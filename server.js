@@ -4,7 +4,7 @@ var http = require('http').Server(app);
 const Remote = require("./modules/Master");
 const Gift = require("./modules/Gift");
 const dotenv = require('dotenv');
-const Master = new Remote("localhost", "postgres", "Hidden", "123456");
+const Master = new Remote("HOST", "USER", "DATABASE", "PASSWORD");
 const pool = Master.Connection();
 
 dotenv.config();
